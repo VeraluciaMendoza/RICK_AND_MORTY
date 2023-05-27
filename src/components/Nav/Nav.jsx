@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const NavBarContainer = styled.div`
@@ -41,12 +41,28 @@ const ButtonRandom = styled.button`
   cursor: pointer;
   font-size: 15px;
 `
+const ButtonLogOut = styled.button`
+  width: 100px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px 5px;
+  font-weight: bold;
+  padding: .5rem 1rem;
+  background-color: rgb(69, 79, 56);
+`
 
 export default function Nav (props) {
   const randomNumber = Math.floor(Math.random() * 100)
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    props.access(false);
+    navigate('/')
+  }
 
   return (
     <NavBarContainer>
+      <ButtonLogOut onClick={handleLogout}>LOG OUT</ButtonLogOut>
       <Buttons>
         <NavLink to={'/about'}>
           <ButtonNavbar>About</ButtonNavbar>
