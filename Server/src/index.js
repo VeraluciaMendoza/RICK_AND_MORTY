@@ -1,36 +1,41 @@
-// const http = require("http");
 // const getCharById = require('./controllers/getCharById')
-// const getCharDetail = require('./controllers/getCharDetail')
-// // const characters = require('./utils/data.js')
+
+
+// // ================ CREANDO SERVIDOR CON EXPRESS ================ //
+// const express = require('express');
+// const server = express();
 // const PORT = 3001;
+// const router = require('./routes/index') ;
 
-// http.createServer(function(req, res) {
-//   // permite hacer peticiones a cualquiera
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   const id = req.url.split('/').pop();
-  
-//   if (req.url.includes("/rickandmorty/character")) {
-//     getCharById(res, id);
-//   }
+// server.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   res.header(
+//      'Access-Control-Allow-Headers',
+//      'Origin, X-Requested-With, Content-Type, Accept'
+//   );
+//   res.header(
+//      'Access-Control-Allow-Methods',
+//      'GET, POST, OPTIONS, PUT, DELETE'
+//   );
+//   next();
+// });
 
-//   if (req.url.includes("detail")) {
-//     getCharDetail(res, id);
-//   }
+// server.use(express.json());
+// server.use('/rickandmorty', router);
 
-//   // if (req.url.includes("/rickandmorty/character")) {
-//   //   const id = req.url.split('/').pop();
-//   //   const character = characters.filter(char => char.id == Number(id));
-//   //   res.writeHead(200, { 'Content-Type': 'application/json' })
-//   //   res.end(JSON.stringify(character))
-//   // }
+// server.listen(PORT, () => {
+//   console.log('Server raised in port: ' + PORT);
+// });
 
-// }).listen(PORT, 'localhost');  
-
-// ================ CREANDO SERVIDOR CON EXPRESS ================ //
-const express = require('express');
-const server = express();
+const server = require('./app');
 const PORT = 3001;
+const { conn } = require('./DB_connection');
 
-server.listen(PORT, () => {
-   console.log('Server raised in port: ' + PORT);
-});
+conn.sync({ force: true })
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log('Server rasied in port: ' + PORT)
+    })
+  })
+  .catch(error => console.log(error.message));

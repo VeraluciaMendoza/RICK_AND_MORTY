@@ -8,7 +8,6 @@ import About from './components/About/About'
 import Detail from './components/Detail/Detail'
 // import NotFound from './components/NotFound';
 import Form from './components/Form';
-import Swal from "sweetalert2";
 import Favorites from './components/Favorites';
 
 function App() {
@@ -21,35 +20,51 @@ function App() {
   // const EMAIL = "veralucia@gmail.com";
   // const PASSWORD = "123456";
 
-  function login(userData) {
-    // if (userData.email === EMAIL && userData.password === PASSWORD) {
-      setAccess(true);
-      navigate('/home');
-    // } else {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Oops...',
-    //     text: 'Algo salió mal la intentar ingresar'
-    // //   })
-    // }
-  }
+  async function login(userData) {
+    const URL = 'http://localhost:3001/rickandmorty/login/';
+    try {
+      const { email, password } = userData;
+      const response = await axios(URL + `?email=${email}&password=${password}`);
+      const { access } = response.data;
+      setAccess(response.data);
+      access && navigate('/home');
+    } catch (error) {
+      console.log(error.message);
+    }
+ }
 
-  function onSearch(id) {
-
-    axios(`http://localhost:3001/rickandmorty/character/${id}`).then(({ data }) => {
-      
-      const exist = characters.find(character => character.id === data.id)
-      
+  async function onSearch(id) {
+    const URL = 'http://localhost:3001/rickandmorty/character/';
+    try {
+      const response = await axios.get(URL + id);
+      const exist = characters.find(character => character.id === response.data.id);
       if (exist) {
         window.alert('¡Ya existe el personaje con este ID!');
       } else {
-        if (data.name) {
-          setCharacters((oldChars) => [...oldChars, data]);
-       } else {
+        if (response.data.name) {
+          setCharacters((oldChars) => [...oldChars, response.data]);
+        } else {
           window.alert('¡No hay personajes con este ID!');
-       }
+        }
       }
-    });
+    } catch (error) {
+      window.alert(error);
+    }
+
+    // axios(`http://localhost:3001/rickandmorty/character/${id}`).then(({ data }) => {
+      
+    //   const exist = characters.find(character => character.id === data.id)
+      
+    //   if (exist) {
+    //     window.alert('¡Ya existe el personaje con este ID!');
+    //   } else {
+    //     if (data.name) {
+    //       setCharacters((oldChars) => [...oldChars, data]);
+    //    } else {
+    //       window.alert('¡No hay personajes con este ID!');
+    //    }
+    //   }
+    // });
  }
 
   const onClose = (id) => {
@@ -74,7 +89,7 @@ function App() {
           <Route path='/home' element={<Cards characters={characters} onClose={onClose}/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/detail/:id' element={<Detail/>}/>
-          <Route path='/favorites' element={<Favorites/>} />
+          <Route path='/favorites' element={<Favorites onClose={onClose}/>} />
         </Routes>
       </div>
    );
