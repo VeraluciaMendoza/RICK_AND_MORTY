@@ -15,13 +15,12 @@ const sequelize = new Sequelize(
    { logging: false, native: false }
 );
 
+console.log(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/rickandmorty`)
+
 // EJERCICIO 05
 // Debajo de este comentario puedes ejecutar la función de los modelos.
 FavoriteModel(sequelize);
 UserModel(sequelize);
-//
-
-//
 
 // Ejercicio 06
 // ¡Relaciona tus modelos aquí abajo!
@@ -29,9 +28,10 @@ const { User, Favorite } = sequelize.models;
 // User N:N Favorite
 User.belongsToMany(Favorite, { through: "user_favorite"});
 // Favorite N:N User
-Favorite.belongsToMany(User, { through: "user_favorite"})
+Favorite.belongsToMany(User, { through: "user_favorite"});
+
 module.exports = {
-   User,
-   Favorite,
-   conn: sequelize,
+  User,
+  Favorite,
+  conn: sequelize,
 };

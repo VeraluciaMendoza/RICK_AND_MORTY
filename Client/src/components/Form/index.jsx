@@ -141,7 +141,7 @@ const Form = (props) => {
           <p>{ errors.password ? errors.password : null }</p>
         </FormGroup>
 
-          <button onClick={handleSubmit} type="submit">SUBMIT</button>
+          <button type="submit">SUBMIT</button>
       </Formulario>
     </div>
   )

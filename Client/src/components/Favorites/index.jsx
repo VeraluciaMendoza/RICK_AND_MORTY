@@ -1,7 +1,8 @@
-import { connect } from "react-redux"
+import { connect, useDispatch } from "react-redux"
 import { Card } from "../Card/Card";
 import styled from "styled-components";
 import { filterCards, orderCards } from "../../redux/actions";
+import { useState } from "react";
 
 const ContainerFavorites = styled.div`
   display: flex;
@@ -10,23 +11,35 @@ const ContainerFavorites = styled.div`
   padding: 1rem 2rem;
 `
 
-const Favorites = (props) => {
-  console.log(props, 'favor')
+const Favorites = ({ myFavorites, onClose }) => {
+  const [aux, setAux] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleOrder = (event) => {
+    dispatch(orderCards(event.target.value));
+    setAux(!aux)
+  }
+
+  const handleFilter = (event) => {
+    dispatch(filterCards(event.target.value));
+  }
+
   return (
     <ContainerFavorites>
       <h1>My Favorites</h1>
-      <select>
+      <select onChange={handleOrder}>
         <option value='A'>Ascendente</option>
         <option value='D'>Descendente</option>
       </select>
-      <select>
-      <option value="Male">Male</option>
-      <option value="Male">Female</option>
-      <option value="Male">Genderless</option>
-      <option value="Male">unknown</option>
+      <select onChange={handleFilter}>
+        <option value="All">All</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Genderless">Genderless</option>
+        <option value="unknown">unknown</option>
       </select>
       {
-        props.myFavorites.map(fav => (
+        myFavorites.map(fav => (
           <Card
             key={fav.id}
             id={fav.id}
@@ -36,7 +49,7 @@ const Favorites = (props) => {
             gender={fav.gender}
             origin={fav.origin.name}
             image={fav.image}
-            onClose={props.onClose(fav.id)}
+            onClose={onClose}
           />
         ))
       }
