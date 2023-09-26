@@ -65,17 +65,17 @@ export default function Nav (props) {
 
   return (
     <NavBarContainer>
-      <ButtonLogOut onClick={handleLogout}>LOG OUT</ButtonLogOut>
-      <NavLink to={'/favorites'}>
-        <ButtonFavorites>Favorites</ButtonFavorites>
-      </NavLink>
+      {/* <ButtonLogOut onClick={handleLogout}>LOG OUT</ButtonLogOut> */}
       <Buttons>
-        <NavLink to={'/about'}>
-          <ButtonNavbar>About</ButtonNavbar>
-        </NavLink>
         <NavLink to={'/home'}>
           <ButtonNavbar>Home</ButtonNavbar>
         </NavLink>
+        <NavLink to={'/about'}>
+          <ButtonNavbar>About</ButtonNavbar>
+        </NavLink>
+        <NavLink to={'/favorites'}>
+        <ButtonNavbar>Favorites</ButtonNavbar>
+      </NavLink>
       </Buttons>
 
       <SearchBar onSearch={props.onSearch}/>

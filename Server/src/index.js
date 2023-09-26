@@ -3,7 +3,7 @@ const PORT = 3001;
 // Importo instancia de "sequelize" => "conn"
 const { conn } = require('./DB_connection');
 
-conn.sync({ force: true })
+conn.sync({ force: false })
     .then(() => {
       server.listen(PORT, () => {
          console.log('Server raised in port: ' + PORT);

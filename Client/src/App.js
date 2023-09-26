@@ -16,16 +16,16 @@ function App() {
   const navigate = useNavigate();
 
   const [characters, setCharacters] = useState([]);
-  const [access, setAccess] = useState(false);
+  const [access, setAccess] = useState(true);
 
   async function login(userData) {
     try {
-      const { email, password } = userData;
-      const URL = 'http://localhost:3001/rickandmorty/login/';
-      const { access } = (await axios(URL + `?email=${email}&password=${password}`)).data;
-      console.log(access, 'acces')
-      setAccess(access);
-      access && navigate('/home');
+      // const { email, password } = userData;
+      // const URL = 'http://localhost:3001/rickandmorty/login/';
+      // const { access } = (await axios(URL + `?email=${email}&password=${password}`)).data;
+      // setAccess(access);
+      // access && 
+      navigate('/home');
     } catch (error) {
       console.log(error.message);
     }

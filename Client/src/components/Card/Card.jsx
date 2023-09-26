@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 
 const Container = styled.div``
 const ContainerButton = styled.div`
+  display: flex;
+  padding: .3rem 1rem .2rem;
 `
 const ContainerCard = styled.div`
   background-color: #97ce4c;
@@ -43,7 +45,7 @@ const ButtonCard = styled.button`
   display: block;
   width: 25px;
   height: 25px;
-  font-size: 14px;
+  font-size: 1.4rem;
   position: absolute;
   right: 5px;
   top: 5px;
@@ -79,6 +81,11 @@ const Content = styled.div`
   display: flex;
   justify-content: space-between;
 `
+const FavButton = styled.button`
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+`
 
 export function Card(props) {
   console.log(props, 'porps de card')
@@ -108,9 +115,9 @@ export function Card(props) {
         <ContainerButton>
           {
             isFav ? (
-                <button onClick={handleFavorite}>❤️</button>
+                <FavButton onClick={handleFavorite}>❤️</FavButton>
             ) : (
-                <button onClick={handleFavorite}>🤍</button>
+                <FavButton onClick={handleFavorite}>🤍</FavButton>
             )
           }
           <ButtonCard onClick={() => props.onClose(props.id)}>X</ButtonCard>

@@ -46,6 +46,7 @@ const reducer = (state = initialState, action) => {
     case ORDER: {
       let orderCharacters = [];
       const charactersCopy = [...state.allCharacters];
+      console.log(charactersCopy, 'cpy')
       if(payload === 'A') {
         orderCharacters = charactersCopy.sort(
           (a, b) => a.id - b.id

@@ -5,7 +5,6 @@ import { FILTER, ORDER } from './types';
 const ENDPOINT = 'http://localhost:3001/rickandmorty/fav'
 
 export const addFav = (character) => {
-  console.log(character, 'action')
   return async (dispatch) => {
     try {
       const { data } = await axios.post(ENDPOINT, character);
